@@ -6,9 +6,8 @@ import sys
 import subprocess
 import config
 
-PORT_NUMBER = 8080
+PORT_NUMBER = config.port_number
 
-print(config.paths['chatbot']['model'])
 def parse_output(output_path):
 	f = open(output_path,'r')
 	pred_labels = []

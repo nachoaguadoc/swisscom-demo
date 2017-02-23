@@ -8,3 +8,5 @@ paths = {
 		'predictions': ''
 	}
 }
+
+port_number = 8080
