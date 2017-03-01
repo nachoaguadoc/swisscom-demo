@@ -1,7 +1,7 @@
 //suggestions = ['The food is tasty', 'The restaurant was very expensive', 'I think the steak was not very good', 'The fish was ok, but I the salad was better', 'The breakfast was delicious!', 'How much does these oranges cost?']
 var suggestions = [];
 function new_question(question) {
-
+	$('#question_row').show();
 	$('#question').text(question);
 	$('#suggestions').text('');	
 	$('#answer_baseline').text('');
@@ -28,6 +28,8 @@ function new_opinion_answer(original, labels) {
 		}
 		formatted_texts.push(formatted_text);
 	}
+	$('#question_row').hide();
+
 	$('#question').text('');
 	suggestions_random = get_random_suggestions(suggestions);
     load_suggestions(suggestions_random);	
@@ -85,11 +87,15 @@ function clean() {
 	$('#suggestions').text('');
 }
 function refresh() {
+	$('#question_row').hide();
+
 	suggestions_random = get_random_suggestions(suggestions);
 	load_suggestions(suggestions_random);
 }
 
 $(document).ready(function(){
+	$('#question_row').hide();
+
 	$.getJSON("../javascripts/lists/opinion_mining.json", function(json) {
 		suggestions = json.candidates;
 		suggestions_random = get_random_suggestions(suggestions);
