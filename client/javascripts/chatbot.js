@@ -1,3 +1,10 @@
+function new_question(question) {
+	$('#question').text(question);
+	$('#answer_benchmark').text('');
+	$('#answer_chatbot').text('');
+	start_spinner();
+}
+
 function new_chatbot_answer(candidates) {
 	neural_answer = true;
 	for (c in candidates) {
@@ -9,7 +16,23 @@ function new_chatbot_answer(candidates) {
 		}
 	}
 	$('.col-md-6').matchHeight();
-	//$('#answer_benchmark').html('<span>' + benchmark + ' <i class="fa fa-database answer" aria-hidden="true"></i></span>');
-	//$('#answer_chatbot').html('<span>' + chatbot + ' <i class="fa fa-cog answer" aria-hidden="true"></i></span>');
 	stop_spinner();
+}
+
+
+function submit(input_text) {
+	console.log("Chatbot input:", input_text)
+	$('#input_text').val('');
+	new_question(input_text);
+	url = "http://localhost:8080/chatbot"
+	$.ajax({
+	  type: "POST",
+	  url: url,
+	  data: input_text,
+	  dataType: 'text',
+	  success: function(data) {
+	  	splitted = data.split('___***___');
+	  	new_chatbot_answer(splitted)
+	  }
+	});
 }

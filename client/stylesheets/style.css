@@ -47,12 +47,6 @@
     outline:none;
 }
 
-#question {
-    font-size: 18px;
-    margin: 20px;
-    padding-left: 80px;
-}
-
 #answer_benchmark, #answer_chatbot {
     font-size: 18px;
     margin: 20px;
