@@ -17,16 +17,16 @@ def parse_output(output_path):
 	return " ".join(pred_labels)
 
 def handle_opinion(self, question):
-	script_dir = config.paths['opinion_target']['script']
-	predict_dir = config.paths['opinion_target']['predictions']
+	script_dir = config.paths['opinion_target'] + 'run_demo.py'
+	predict_dir = config.paths['opinion_target'] + 'predictions.txt'
 	subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"'])
 	answer = parse_output(predict_dir)
 	print("Question received for Opinion Target project", answer)
 	self.wfile.write(bytes(answer, "utf8"))
 
 def handle_chatbot(self, question):
-	predict_dir = config.paths['chatbot']['predictions']
-	model_dir = config.paths['chatbot']['model']
+	predict_dir = config.paths['chatbot']
+	model_dir = config.paths['chatbot'] + 'runs/1486584016'
 	subprocess.call(['python', predict_dir + 'demo_prediction.py', '--model_dir=' + model_dir, '--raw_query=' + "'" + question + "'"])
 	answer = ''
 	with open(predict_dir + "answers.txt", "r") as text_file:
