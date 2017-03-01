@@ -19,14 +19,27 @@ def parse_output(output_path):
 def handle_opinion(self, question):
 	script_dir = config.paths['opinion_target'] + 'run_demo.py'
 	predict_dir = config.paths['opinion_target'] + 'predictions.txt'
-	responce = ""
+	response = ""
 	for model in ["baseline", "embedding"]:
 		subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
 		answer = parse_output(predict_dir)
 		# concatenate the answers
-		responce  += answer + " | "
-	answer = responce[:-3]
+		response  += answer + " | "
+	answer = response[:-3]
 	print("Question received for Opinion Target project", answer)
+	self.wfile.write(bytes(answer, "utf8"))
+
+def handle_ner(self, question):
+	script_dir = config.paths['ner'] + 'run_demo.py'
+	predict_dir = config.paths['ner'] + 'predictions.txt'
+	response = ""
+	for model in ["baseline", "embedding"]:
+		subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
+		answer = parse_output(predict_dir)
+		# concatenate the answers
+		response  += answer + " | "
+	answer = response[:-3]
+	print("Question received for Name Entity Recognition project", answer)
 	self.wfile.write(bytes(answer, "utf8"))
 
 def handle_chatbot(self, question):
@@ -64,6 +77,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 			handle_chatbot(self, question)
 		elif self.path == '/opinion':
 			handle_opinion(self, question)
+		elif self.path == '/ner':
+			handle_ner(self, question)
 		return
 
 def run():
