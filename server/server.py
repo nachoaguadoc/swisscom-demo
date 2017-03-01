@@ -19,8 +19,13 @@ def parse_output(output_path):
 def handle_opinion(self, question):
 	script_dir = config.paths['opinion_target'] + 'run_demo.py'
 	predict_dir = config.paths['opinion_target'] + 'predictions.txt'
-	subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"'])
-	answer = parse_output(predict_dir)
+	responce = ""
+	for model in ["baseline", "embedding"]:
+		subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
+		answer = parse_output(predict_dir)
+		# concatenate the answers
+		responce  += answer + " | "
+	answer = responce[:-3]
 	print("Question received for Opinion Target project", answer)
 	self.wfile.write(bytes(answer, "utf8"))
 
@@ -57,7 +62,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 		self.end_headers()
 		if self.path == '/chatbot':
 			handle_chatbot(self, question)
-		else:
+		elif self.path == '/opinion':
 			handle_opinion(self, question)
 		return
 
