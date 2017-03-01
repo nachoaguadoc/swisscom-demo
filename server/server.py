@@ -29,6 +29,19 @@ def handle_opinion(self, question):
 	print("Question received for Opinion Target project", answer)
 	self.wfile.write(bytes(answer, "utf8"))
 
+def handle_ner(self, question):
+	script_dir = config.paths['ner'] + 'run_demo.py'
+	predict_dir = config.paths['ner'] + 'predictions.txt'
+	response = ""
+	for model in ["baseline", "embedding"]:
+		subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
+		answer = parse_output(predict_dir)
+		# concatenate the answers
+		response  += answer + " | "
+	answer = response[:-3]
+	print("Question received for Name Entity Recognition project", answer)
+	self.wfile.write(bytes(answer, "utf8"))
+
 def handle_chatbot(self, question):
 	predict_dir = config.paths['chatbot']
 	model_dir = config.paths['chatbot'] + 'runs/1486584016'
@@ -64,6 +77,8 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 			handle_chatbot(self, question)
 		elif self.path == '/opinion':
 			handle_opinion(self, question)
+		elif self.path == '/ner':
+			handle_ner(self, question)
 		return
 
 def run():
