@@ -1,6 +1,7 @@
 //suggestions = ['The food is tasty', 'The restaurant was very expensive', 'I think the steak was not very good', 'The fish was ok, but I the salad was better', 'The breakfast was delicious!', 'How much does these oranges cost?']
 var suggestions = [];
 function new_question(question) {
+	$('#legend').hide();
 	$('#question_row').show();
 	$('#question').text(question);
 	$('#suggestions').text('');	
@@ -22,14 +23,22 @@ function new_opinion_answer(original, labels) {
 		for (i = 0; i < l.length; i++) {
 			if (l[i] == "O") {
 				formatted_text += '<span>' + original_splitted[i] + ' </span>';
-			} else {
+			} else if (l[i] == "B-PER" || l[i] == "I-PER") {
 				formatted_text += '<span class="red">' + original_splitted[i] + ' </span>';
+			} else if (l[i] == "B-ORG" || l[i] == "I-ORG") {
+				formatted_text += '<span class="blue">' + original_splitted[i] + ' </span>';
+			} else if (l[i] == "B-LOC" || l[i] == "I-LOC") {
+				formatted_text += '<span class="green">' + original_splitted[i] + ' </span>';
+			} else if (l[i] == "B-MISC" || l[i] == "I-MISC") {
+				formatted_text += '<span class="orange">' + original_splitted[i] + ' </span>';
+			} else {
+				formatted_text += '<span>' + original_splitted[i] + ' </span>';
 			}
 		}
 		formatted_texts.push(formatted_text);
 	}
 	$('#question_row').hide();
-
+	$('#legend').show();
 	$('#question').text('');
 	suggestions_random = get_random_suggestions(suggestions);
     load_suggestions(suggestions_random);	
@@ -88,7 +97,7 @@ function clean() {
 }
 function refresh() {
 	$('#question_row').hide();
-
+	$('#legend').hide();
 	suggestions_random = get_random_suggestions(suggestions);
 	load_suggestions(suggestions_random);
 }
