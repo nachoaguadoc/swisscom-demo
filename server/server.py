@@ -31,7 +31,7 @@ def handle_opinion(self, question):
 
 def handle_ner(self, question):
 	script_dir = config.paths['ner'] + 'run_demo.py'
-	predict_dir = config.paths['ner'] + 'predictions.txt'
+	predict_dir = config.paths['ner'] + 'predictions/predictions.txt'
 	response = ""
 	for model in ["baseline", "embedding"]:
 		subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
