@@ -1,0 +1,24 @@
+#banner {
+    width: 50%;
+    margin-top: 1%;
+}
+#panel_row {
+    margin-top: 30px;
+}
+.panel_title {
+	font-size: 14px;
+	font-weight: bold;
+}
+#form-input{
+	position: relative;
+}
+#submit_col {
+	position: absolute;
+	height: 100%;
+	right: 0;
+	top: 40%;
+}
+#submit_button {
+	position: absolute;
+	right: 30%
+}

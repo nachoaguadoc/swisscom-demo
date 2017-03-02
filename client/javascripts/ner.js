@@ -11,7 +11,7 @@ function new_question(question) {
 	start_spinner();
 }
 
-function new_opinion_answer(original, labels) {
+function new_ner_answer(original, labels) {
 	console.log("Labels:", labels)
 	formatted_text = ''
 	labels_model = labels.split(" | ");
@@ -59,7 +59,7 @@ function submit(input_text) {
 	  data: input_text,
 	  dataType: 'text',
 	  success: function(data) {
-	  	new_opinion_answer(input_text, data)
+	  	new_ner_answer(input_text, data)
 	  }
 	});
 }

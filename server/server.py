@@ -5,6 +5,7 @@ import json
 import sys
 import subprocess
 import config
+from urllib.parse import urlparse
 
 PORT_NUMBER = config.port_number
 
@@ -31,7 +32,7 @@ def handle_opinion(self, question):
 
 def handle_ner(self, question):
 	script_dir = config.paths['ner'] + 'run_demo.py'
-	predict_dir = config.paths['ner'] + 'predictions.txt'
+	predict_dir = config.paths['ner'] + 'predictions/predictions.txt'
 	response = ""
 	for model in ["baseline", "embedding"]:
 		subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
@@ -69,7 +70,7 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 		# Send the html message
 		print("POST request to URL " + self.path)
 		question = self.rfile.read(int(self.headers['Content-Length'])).decode("utf-8") 
-		print(question)
+		
 		self.send_response(200)
 		self.send_header('Content-type','text/html')
 		self.end_headers()
@@ -79,6 +80,10 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 			handle_opinion(self, question)
 		elif self.path == '/ner':
 			handle_ner(self, question)
+		else:
+			test_data = urlparse(self.path + question)
+			print(test_data)
+			
 		return
 
 def run():
