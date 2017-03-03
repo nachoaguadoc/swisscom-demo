@@ -35,6 +35,7 @@ function submit() {
 	}
 	url = "http://localhost:8080/kp";
 
+	if (!filters) filters = '';
 	$.ajax({
 	  type: "POST",
 	  url: url,

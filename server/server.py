@@ -51,7 +51,15 @@ def handle_chatbot(self, question):
 	with open(predict_dir + "answers.txt", "r") as text_file:
 		answer = text_file.readlines()
 	self.wfile.write(bytes(answer[0], "utf8"))
- 
+
+def handle_kp_extraction(self, source, date, methods, filter):
+    project_path = config.paths['kp_extraction']
+    output_path = config.paths['kp_extraction_output']
+    subprocess.call(['python', project_path, ' -m kpextract.frontend_brdige.baseline', ' '.join([source, date, filter]), output_path])
+    with open(output_path, 'r') as f:
+        result_json = json.load(f)
+    self.wfile.write(bytes(result_json, "utf8"))
+
 # HTTPRequestHandler class
 class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 	# GET
@@ -80,10 +88,13 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 			handle_opinion(self, question)
 		elif self.path == '/ner':
 			handle_ner(self, question)
-		else:
-			test_data = urlparse(self.path + question)
-			print(test_data)
-			
+		elif self.path == '/kp':
+			params = question.split('&')
+			source = params[0].split('=')[1]
+			dates = params[1].split('=')[1]
+			methods = params[2].split('=')[1]
+			filters = params[3].split('=')[1]
+			handle_kp_extraction(self, params, source, dates, methods, filters)
 		return
 
 def run():
