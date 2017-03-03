@@ -1,4 +1,4 @@
-//suggestions = ['The food is tasty', 'The restaurant was very expensive', 'I think the steak was not very good', 'The fish was ok, but I the salad was better', 'The breakfast was delicious!', 'How much does these oranges cost?']
+//test = '[{"Autophrase": ["0.9894399779 bernie goldberg", "0.9892098933 robert durst", "0.9891981298 san diego", "0.9890529111 sensor bar", "0.9889876845 chris matthews", "0.9889437755 dragon quest viii", "0.9889333471 linda mcmahon", "0.9888030496 glencore plc", "0.9887943418 tom brady", "0.9886452270 ninja gaiden", "0.9886047567 nick clegg", "0.9883925109 rachel maddow", "0.9883336578 complete cib", "0.9880777028 lg g6", "0.9879448301 clarence thomas", "0.9879331745 hugo chavez", "0.9877539829 geert wilders", "0.9877064625 casa bianca", "0.9876100376 alec baldwins", "0.9875899782 las vegas"]}]'
 var suggestions = [];
 function new_question(question) {
 	$('#question_row').show();
@@ -11,9 +11,17 @@ function new_question(question) {
 }
 
 function new_kp_extraction_answer(data) {
-	console.log(data);
+	data = JSON.parse(test);
+	n_cols = 12 / data.length;
+	for (d in data){
+		method = Object.keys(data[d])[0];
+		sentences = data[d][method];
+		$('#results_row').html($('#results_row').html() + '<div class="col-md-' + n_cols + '" id="' + method + '"><div class="title_method">' + method + '</div></div>');
+		for (s in sentences) {
+			$('#' + method).html($('#' + method).html() + '<div class="sentence">'+ sentences[s] +'</div>');
+		}
+	}
 }
-
 
 function submit() {
 
@@ -35,7 +43,6 @@ function submit() {
 	}
 	url = "http://localhost:8080/kp";
 
-	if (!filters) filters = '';
 	$.ajax({
 	  type: "POST",
 	  url: url,
