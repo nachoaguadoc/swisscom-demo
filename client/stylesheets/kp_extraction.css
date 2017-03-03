@@ -24,14 +24,28 @@
 }
 
 .title_method {
-	text-align: center;
+	text-align: left;
 	font-weight: bold;
 	color: #456bb2;
-	font-size: 14px;
+	font-size: 16px;
 	margin: 0 0 10px 0;
 }
 
 .sentence {
-	text-align: center;
-	font-size: 12px;
+	text-align: left;
+	font-size: 14px;
+}
+
+#r-dumb {
+	margin-top: 40% !important;
+    width: 50% !important;
+    position: absolute;
+    right: 20px;
+}
+
+#r-clever {
+	margin-top: 40% !important;
+    width: 50% !important;
+    position: absolute;
+    right: 50px;
 }
