@@ -1,19 +1,18 @@
 function new_question(question) {
 	$('#question').text(question);
-	$('#answer_benchmark').text('');
-	$('#answer_chatbot').text('');
+	$('#answer_nn').text('');
+	$('#answer_solr').text('');
+	$('.robot').hide();
 	start_spinner();
 }
 
-function new_chatbot_answer(candidates) {
-	neural_answer = true;
-	for (c in candidates) {
-		if (neural_answer) {
-			neural_answer = false;
-			$('#answer_benchmark').html($('#answer_benchmark').html() + '<div class="col-md-6 answer_box"><div class="panel panel-default neural"><div class="panel-body"><span class="fa fa-star favourite"></span>' + candidates[c] + ' </div></div></div>');
-		} else {
-			$('#answer_benchmark').html($('#answer_benchmark').html() + '<div class="col-md-6 answer_box"><div class="panel panel-default benchmark"><div class="panel-body">' + candidates[c] + ' </div></div></div>');
-		}
+function new_chatbot_answer(candidates_nn, candidates_solr) {
+	$('.robot').show();
+	for (c in candidates_nn) {
+		$('#answer_nn').html($('#answer_nn').html() + '<div class="col-md-12 answer_box"><div class="panel panel-default neural"><div class="panel-body">' + candidates_nn[c] + ' </div></div></div>');
+	}
+	for (c in candidates_solr) {
+		$('#answer_solr').html($('#answer_solr').html() + '<div class="col-md-12 answer_box"><div class="panel panel-default benchmark"><div class="panel-body">' + candidates_solr[c] + ' </div></div></div>');
 	}
 	$('.col-md-6').matchHeight();
 	stop_spinner();
@@ -31,8 +30,14 @@ function submit(input_text) {
 	  data: input_text,
 	  dataType: 'text',
 	  success: function(data) {
-	  	splitted = data.split('___***___');
-	  	new_chatbot_answer(splitted)
+	  	data = data.split('___|||___');
+	  	nn = data[0].split('___***___');
+	  	solr = data[1].split('___***___');
+	  	new_chatbot_answer(nn, solr)
 	  }
 	});
 }
+
+$(document).ready(function(){
+	$('.robot').hide();
+});
