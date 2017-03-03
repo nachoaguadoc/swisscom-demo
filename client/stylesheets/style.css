@@ -93,3 +93,16 @@
 .benchmark {
     border-color: #456bb2 !important;
 }
+
+.robot {
+    margin: 10px 0 0 0;
+}
+
+#r-dumb {
+    width: 20%;
+}
+
+#r-clever {
+    width: 20%;
+}
+

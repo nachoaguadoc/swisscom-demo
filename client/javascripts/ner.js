@@ -7,6 +7,7 @@ function new_question(question) {
 	$('#suggestions').text('');	
 	$('#answer_baseline').text('');
 	$('#answer_embeddings').text('');	
+	$('.robot').hide();
 
 	start_spinner();
 }
@@ -38,6 +39,8 @@ function new_ner_answer(original, labels) {
 		formatted_texts.push(formatted_text);
 	}
 	$('#question_row').hide();
+	$('.robot').show();
+
 	$('#legend').show();
 	$('#question').text('');
 	suggestions_random = get_random_suggestions(suggestions);
@@ -94,9 +97,11 @@ function clean() {
 	$('#answer_baseline').text('');
 	$('#answer_embeddings').text('');
 	$('#suggestions').text('');
+
 }
 function refresh() {
 	$('#question_row').hide();
+	$('.robot').hide();
 	$('#legend').hide();
 	suggestions_random = get_random_suggestions(suggestions);
 	load_suggestions(suggestions_random);
@@ -105,7 +110,7 @@ function refresh() {
 $(document).ready(function(){
 	$('#question_row').hide();
 
-	$.getJSON("../javascripts/lists/opinion_mining.json", function(json) {
+	$.getJSON("../javascripts/lists/ner.json", function(json) {
 		suggestions = json.candidates;
 		suggestions_random = get_random_suggestions(suggestions);
 	    load_suggestions(suggestions_random);
