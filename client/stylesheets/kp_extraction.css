@@ -22,3 +22,16 @@
 	position: absolute;
 	right: 30%
 }
+
+.title_method {
+	text-align: center;
+	font-weight: bold;
+	color: #456bb2;
+	font-size: 14px;
+	margin: 0 0 10px 0;
+}
+
+.sentence {
+	text-align: center;
+	font-size: 12px;
+}
