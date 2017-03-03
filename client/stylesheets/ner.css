@@ -56,3 +56,7 @@
 #legend {
 	margin: 0 0 20px 0;
 }
+
+.legend_item {
+    text-align: center;
+}
