@@ -2,10 +2,8 @@
 var suggestions = [];
 function new_question(question) {
 	$('#question_row').show();
+	$('#results_row').text('');
 	$('#question').text(question);
-	$('#suggestions').text('');	
-	$('#answer_baseline').text('');
-	$('#answer_embeddings').text('');	
 
 	start_spinner();
 }
