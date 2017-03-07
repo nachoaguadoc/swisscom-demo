@@ -18,13 +18,13 @@ function new_kp_extraction_answer(data) {
 		method = Object.keys(data[d])[0];
 		sentences = data[d][method];
 		if (first) {
-			$('#results_row').html($('#results_row').html() + '<div class="col-md-1"></div>');
+			//$('#results_row').html($('#results_row').html() + '<div class="col-md-1"></div>');
 			$('#results_row').html($('#results_row').html() + '<div class="col-md-' + 3 + '"><img class="robot" id="r-clever" src="../assets/r-clever.png"></img></div>');
 			$('#results_row').html($('#results_row').html() + '<div class="col-md-' + 2 + '" id="' + method + '"><div class="title_method">' + method + '</div></div>');
 			first = false;
 		} else {
 			$('#results_row').html($('#results_row').html() + '<div class="col-md-' + 3 + '"><img class="robot" id="r-dumb" src="../assets/r-dumb.png"></img></div>');
-			$('#results_row').html($('#results_row').html() + '<div class="col-md-' + 2 + '" id="' + method + '"><div class="title_method">' + method + '</div></div>');
+			$('#results_row').html($('#results_row').html() + '<div class="col-md-' + 3 + '" id="' + method + '"><div class="title_method">' + method + '</div></div>');
 			$('#results_row').html($('#results_row').html() + '<div class="col-md-1"></div>');
 
 		}
