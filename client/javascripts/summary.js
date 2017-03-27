@@ -4,7 +4,13 @@ function start_spinner() {
 }
 
 function new_question(text) {
-    $('#original_text').text(text);
+    var splitted_text = text.split("\n");
+    $('#original_text').html('');
+    var index = 1
+    for (var line in splitted_text) {
+        $('#original_text').html($('#original_text').html() + '<br>' + index + '. ' + splitted_text[line]);
+        index++;
+    }
     $('#summarized').text('');
     start_spinner();
 }
