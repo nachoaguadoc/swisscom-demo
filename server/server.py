@@ -13,13 +13,16 @@ def parse_output(output_path):
 	f = open(output_path,'r')
 	pred_labels = []
 	for line in f:
-		pred_label = line.split()[2]
-		pred_labels.append(pred_label)
+		line = line.strip()
+		if len(line.split()) == 3:
+			pred_label = line.split()[2]
+			pred_labels.append(pred_label)
+	print(pred_labels)
 	return " ".join(pred_labels)
 
 def handle_opinion(self, question):
 	script_dir = config.paths['opinion_target'] + 'run_demo.py'
-	predict_dir = config.paths['opinion_target'] + 'predictions.txt'
+	predict_dir = config.paths['opinion_target'] + '/predictions/predictions.txt'
 	response = ""
 	for model in ["baseline", "embedding"]:
 		subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
