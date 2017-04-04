@@ -6,7 +6,7 @@ import sys
 import subprocess
 import config
 from urllib.parse import urlparse
-
+import time
 PORT_NUMBER = config.port_number
 
 def parse_output(output_path):
@@ -56,13 +56,21 @@ def handle_chatbot(self, question):
 	self.wfile.write(bytes(answer[0], "utf8"))
 
 def handle_kp_extraction(self, source, date, methods, filter):
-	script_path = config.paths['kp_extraction']+'kpextract/frontend_bridge/baseline.py'
-	output_path = config.paths['kp_extraction']+'result/result.json'
-	subprocess.call(['python', script_path, source, date, methods, output_path])
+	# script_path = config.paths['kp_extraction']+'kpextract/frontend_bridge/baseline.py'
+	# output_path = config.paths['kp_extraction']+'result/result.json'
+	# subprocess.call(['python', script_path, source, date, methods, output_path])
+
+	#Temporary for demo (precomputed results)
+	output_path = config.paths['kp_extraction']+'result/'+ source + '-' + date + '.json'
+
 	with open(output_path, 'r') as f:
 		result_json = json.load(f)
 	self.wfile.write(bytes(json.dumps(result_json), "utf8"))
 
+def handle_summary(self, question):
+	print(question)
+	time.sleep(5)
+	self.wfile.write(bytes(question, "utf8"))
 # HTTPRequestHandler class
 class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 	# GET
@@ -98,6 +106,9 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
 			methods = params[2].split('=')[1]
 			filters = params[3].split('=')[1]
 			handle_kp_extraction(self, source, dates, methods, filters)
+		elif self.path == '/summary':
+			handle_summary(self, question)
+
 		return
 
 def run():
