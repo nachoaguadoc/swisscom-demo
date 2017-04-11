@@ -24,12 +24,14 @@ def handle_opinion(self, question):
 	script_dir = config.paths['opinion_target'] + 'run_demo.py'
 	predict_dir = config.paths['opinion_target'] + '/predictions/predictions.txt'
 	response = ""
-	for model in ["baseline", "embedding"]:
-		subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
-		answer = parse_output(predict_dir)
-		# concatenate the answers
-		response  += answer + " | "
-	answer = response[:-3]
+	# for model in ["baseline", "embedding"]:
+	# 	subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"', "--model", model])
+	# 	answer = parse_output(predict_dir)
+	# 	# concatenate the answers
+	# 	response  += answer + " | "
+	# answer = response[:-3]
+	subprocess.call(['python', script_dir, '--sentence', '"'+ question + '"'])
+	answer = parse_output(predict_dir)
 	print("Question received for Opinion Target project", answer)
 	self.wfile.write(bytes(answer, "utf8"))
 
